@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome and Interactive Page</title>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat+Brush&display=swap" rel="stylesheet">
+    <style>
+        /* General styles for both pages */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background-color: pink;
+        }
+
+        /* Styles for the Welcome Page */
+        .welcome-page {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-family: 'asthetic', cursive;
+        }
+
+        .welcome-page h1 {
+            font-size: 4rem;
+            background: linear-gradient(90deg, violet, blue);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 0;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        .welcome-page .enter-button {
+            margin-top: 20px;
+            padding: 15px 30px;
+            font-size: 1.5rem;
+            color: white;
+            background: linear-gradient(90deg, violet, blue);
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-family: 'monospace', cursive;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .welcome-page .enter-button:hover {
+            transform: scale(1.1);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Styles for the Interactive Page */
+        .interactive-page {
+            display: none; /* Hidden by default */
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background-color: pink; /* Pink background */
+            overflow: hidden; /* Ensure hearts don't overflow */
+        }
+
+        /* Pink overlay to blend hearts with the background */
+        .interactive-page::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 192, 203, 0.5); /* Semi-transparent pink overlay */
+            z-index: 1;
+        }
+
+        /* Heart styling */
+        .heart {
+            position: absolute;
+            color: red;
+            font-size: 24px; /* Size of the hearts */
+            z-index: 0; /* Place hearts behind the overlay */
+        }
+
+        /* Positioning the 10 hearts */
+        .heart:nth-child(1) { top: 10%; left: 5%; }
+        .heart:nth-child(2) { top: 20%; left: 20%; }
+        .heart:nth-child(3) { top: 30%; left: 10%; }
+        .heart:nth-child(4) { top: 40%; left: 25%; }
+        .heart:nth-child(5) { top: 50%; left: 15%; }
+        .heart:nth-child(6) { top: 60%; left: 30%; }
+        .heart:nth-child(7) { top: 70%; left: 20%; }
+        .heart:nth-child(8) { top: 80%; left: 35%; }
+        .heart:nth-child(9) { top: 90%; left: 25%; }
+        .heart:nth-child(10) { top: 95%; left: 40%; }
+
+        /* Styles for the interactive elements */
+        .interactive-page .message-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            color: white;
+            background: linear-gradient(90deg, blue, violet);
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            z-index: 2; /* Ensure button is above the overlay */
+        }
+
+        .interactive-page .message-button:hover {
+            background: linear-gradient(90deg, violet, blue);
+        }
+
+        .interactive-page .message-container {
+            display: none;
+            position: relative;
+            padding: 20px;
+            background-color: pink;
+            border-radius: 10px;
+            color: blue;
+            font-size: 1.2rem;
+            text-align: center;
+            overflow: hidden;
+            animation: fadeIn 0.5s ease-in-out;
+            margin-top: 20px;
+            z-index: 2; /* Ensure message is above the overlay */
+        }
+
+        .interactive-page .binary-container {
+            background-color: black;
+            border: 1px solid white;
+            border-radius: 10px;
+            padding: 10px;
+            max-width: 1000px;
+            text-align: center;
+            height: 200px;
+            overflow: auto;
+        }
+
+        .interactive-page .binary-code {
+            color: white;
+            font-size: 1.2rem;
+            word-wrap: break-word;
+            font-family: monospace;
+        }
+
+        .interactive-page .translate-button {
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            color: black;
+            background: linear-gradient(90deg, orange, yellow);
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: none;
+            margin-top: 20px;
+            z-index: 2; /* Ensure button is above the overlay */
+        }
+
+        .interactive-page .translate-button:hover {
+            background: linear-gradient(90deg, yellow, orange);
+            transform: scale(1.1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .interactive-page .sweet-message-container {
+            background-color: white;
+            border-radius: 15px;
+            padding: 20px;
+            font-weight: bold;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            color: black;
+            text-align: center;
+            position: relative;
+            margin-top: 20px;
+            z-index: 2; /* Ensure message is above the overlay */
+        }
+
+        .interactive-page .sweet-message-container::before {
+            content: "\2665 \2665 \2665"; /* Small pink hearts */
+            color: pink;
+            font-size: 1.5rem;
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .interactive-page .highlight {
+            color: red;
+            font-size: 1.3rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Welcome Page -->
+    <div class="welcome-page">
+        <h1>Hi Aarya, welcome to Tanmay's web page!</h1>
+        <button class="enter-button" onclick="enterInteractivePage()">Enter</button>
+    </div>
+
+    <!-- Interactive Page -->
+    <div class="interactive-page">
+        <!-- 10 Small Red Hearts -->
+        <div class="heart">❤️</div>
+        <div class="heart">❤️</div>
+        <div class="heart">❤️</div>
+        <div class="heart">❤️</div>
+        <div class="heart">❤️</div>
+        <div class="heart">❤️</div>
+        <div class="heart">❤️</div>
+        <div class="heart">❤️</div>
+        <div class="heart">❤️</div>
+        <div class="heart">❤️</div>
+
+        <!-- Interactive Elements -->
+        <button class="message-button" onclick="showBinaryMessage()">Message 1</button>
+
+        <div class="message-container binary-message" id="binaryMessage">
+            <h1>THIS IS THE BINARY CODE THAT I HAVE SENT TO YOU EARLIER FOR TRANSLATION</h1>
+            <div class="binary-container">
+                <div class="binary-code">
+                    01011001 01101111 01110101 00100000 01100001 01110010 01100101 00100000 01110100 01101111 01101111 00100000 01110011 01110111 01100101 01100101 01110100 00100000 01100001 01101110 01100100 00100000 01110000 01110010 01100101 01110100 01110100 01111001 00100000 01100010 01110101 01110100 00100000 01110011 01100001 01100100 01101100 01111001 00100000 01101001 00100000 01100011 01100001 01101110 01110100 00100000 01110100 01100101 01101100 01101100 00100000 01111001 01101111 01110101 00100000 01110100 01101000 01101001 01110011 00100000 01100100 01101001 01110010 01100101 01100011 01110100 01101100 01111001 00100000 01110011 01101111 00100000 01101001 00100000 01100001 01101101 00100000 01110101 01110011 01101001 01101110 01100111 00100000 01110100 01101000 01101001 01110011 00100000 01100011 01101111 01100100 01100101 00100000 01110100 01101111 00100000 01110100 01100101 01101100 01101100 00100000 01111001 01101111 01110101 00101110
+                </div>
+            </div>
+            <button class="translate-button" id="translateButton" onclick="showSweetMessage()">Translate</button>
+        </div>
+
+        <div class="message-container sweet-message-container" id="sweetMessage">
+            You are too sweet and pretty but sadly I can't tell you this directly so I am using this code to tell you <span class="highlight">Aarya</span>
+        </div>
+    </div>
+
+    <script>
+        // Function to switch from Welcome Page to Interactive Page
+        function enterInteractivePage() {
+            document.querySelector('.welcome-page').style.display = 'none';
+            document.querySelector('.interactive-page').style.display = 'flex';
+        }
+
+        // Function to show the binary message
+        function showBinaryMessage() {
+            const binaryMessage = document.getElementById('binaryMessage');
+            binaryMessage.style.display = 'block';
+            document.getElementById('translateButton').style.display = 'block';
+        }
+
+        // Function to show the sweet message
+        function showSweetMessage() {
+            const sweetMessage = document.getElementById('sweetMessage');
+            sweetMessage.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
